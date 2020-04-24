@@ -1,0 +1,34 @@
+{
+  "name": "nodejshapipostgres",
+  "version": "1.0.0",
+  "description": "development back end with hapiJS and PostgresSql",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pragistyo/nodejsHapiPostGres.git"
+  },
+  "keywords": [
+    "hapiBackEndDev"
+  ],
+  "author": "Ogi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Pragistyo/nodejsHapiPostGres/issues"
+  },
+  "homepage": "https://github.com/Pragistyo/nodejsHapiPostGres#readme",
+  "dependencies": {
+    "@hapi/hapi": "^19.1.1",
+    "pg": "^8.0.3"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  }
+}
