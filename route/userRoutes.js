@@ -1,11 +1,26 @@
 
 const UserControllers = require('../Controller/userController')
+const {Pool, Client} = require('pg');
+const chalk = require('chalk')
+
+const dbConfig = require('../dbConfig')
+const queryPool = require('../dbTableQueryConfig')
+
+const pool = new Pool(dbConfig);
 module.exports = [
     {
         path: '/',
         method: 'GET',
-        handler: ()=>{
-             return 'HELLO WORLD'
+        handler: async()=>{
+            try{
+                const client  = await pool.connect()
+                let allUsers = await client.query(queryPool.getAllUsers)
+                console.log(chalk.green('ini test query: ',allUsers.rows[0]))
+                return allUsers.rows[0]
+            }catch(e){
+                // return 'error occured'
+                console.log(e)
+            }             
         }
 
     },
@@ -32,7 +47,7 @@ module.exports = [
     {
         path: '/api/users/{id}',
         method: 'PUT',
-        handler: UserControllers.update
+        handler: UserControllers.updateAuthority
     }
 ];
 

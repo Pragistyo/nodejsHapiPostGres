@@ -1,36 +1,40 @@
 const {Pool, Client} = require('pg');
-const seedData = require('./seedData')
-// require('dotenv').config()
-//or native libpq bindings
+const chalk = require('chalk')
+const to = requier('./helper/to')
 
-// const conString = process.env.INSERT_YOUR_POSTGRES_URL_HERE
 const dbConfig = require('./dbConfig')
 const queryPool = require('./dbTableQueryConfig')
 
+console.log('DBconfig: ', dbConfig)
 const pool = new Pool(dbConfig);
-// console.log('seedData: ', seedData)
-console.log('seedDbUsers: ',queryPool.seedDbUsers(seedData.primeUser))
 // console.log(pool)
-pool.on('error', function (err, client) {
-    console.error('idle client error', err.message, err.stack);
-});
-
 const initCreateDB = async ()=>{
-  const client = await pool.connect()
+  let conn;
 
   try{
-      let createTableUsers = await client.query(queryPool.createTableUsers)
-      let createTableProfileUsers = await client.query(queryPool.createTableProfile)
+    [conn, connErr] = await to(pool.connect())
+    if(connErr) throw new Error('Error open connection')
 
+    let [createTableUsers, createTableUsersError] = await conn.query(queryPool.createTableUsers)
+    if(createTableUsersError) throw new Error('Error create Table Users')
 
-      console.log('createTableUsers: ', createTableUsers.rows)
-      console.log('createTableProfile: ', createTableProfileUsers.rows)
+    let [createTableProfileUsers, createTableProfileUsersError] = await conn.query(queryPool.createTableProfile)
+    if(createTableProfileUsersError) throw new Error('Error Create Table ProfileUsers')
 
-  }catch(errCreate){
-      console.error('Ini error create table Users', errCreate)
+    console.log(chalk.green('createTableUsers: ', createTableUsers.command))
+    console.log(chalk.green('createTableProfile: ', createTableProfileUsers.command))
+
+  }catch(err){
+    console.error('ERROR CONNECT POOL: ', err)
+  }finally{
+    try{
+      if(conn) await pool.end()
+      console.log('Connection closed');
+      
+    }catch(e){ console.log('Error close conn: ',e); }
   }
 
-  client.release()
+  
 }
 
 initCreateDB();
