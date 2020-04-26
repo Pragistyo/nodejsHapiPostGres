@@ -13,8 +13,8 @@ This API Documentation is consist end point of this REST api.
 Route               | HTTP   | Description
 --------------------|--------|---------------------
 
-`/api/users`        | GET    | Get all customers data       
-`/api/users`        | POST   | Create one customer data       
-`/api/users/:id`    | GET    | Get one customer data
-`/api/users/:id`    | PUT    | Update data a single customer
-`/api/users/:id`    | DELETE   | Delete customer data
+`/api/users`        | GET    | Get all users data       
+`/api/users`        | POST   | Create one user data       
+`/api/users/:id`    | GET    | Get one user data
+`/api/users/:id`    | PUT    | Update data a single user
+`/api/users/:id`    | DELETE | Delete single user data
