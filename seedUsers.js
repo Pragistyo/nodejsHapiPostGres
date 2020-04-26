@@ -15,7 +15,7 @@ const initSeedDB = async () => {
         console.log('seedDbUser: ', seedDbUsers)
     }catch(err){
         console.error('error seeding users: ', err)
-    }
+    } 
 
     conn.end();
 }
