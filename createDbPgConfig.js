@@ -37,4 +37,4 @@ const initCreateDB = async ()=>{
   
 }
 
-initCreateDB();
+ initCreateDB();
