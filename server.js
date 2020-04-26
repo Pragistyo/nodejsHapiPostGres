@@ -23,7 +23,7 @@ const init = async () => {
     // console.log(userRoutes)
     server.route(userRoutes)
 
-    try{ 
+    try{  
       //connect pg
       [conn, connError] = await to(client.connect())
       if(connError) throw new Error ('Error open Connection')
