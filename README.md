@@ -15,3 +15,5 @@ This API Documentation is consist end point of this REST api.
 | `/api/users`      | GET    | Get all users data
 | `/api/users`      | POST   | Create one user data
 | `/api/users/:id`  | GET    | Get one user data
+| `/api/users/:id`  | PUT    | Update one user data
+| `/api/users/:id`  | DELETE | Delete one user data
