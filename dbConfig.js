@@ -8,4 +8,4 @@ const config = {
     port: 5432, 
 };
 
-module.exports = config
+module.exports =  config
