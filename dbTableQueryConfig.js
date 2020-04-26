@@ -31,7 +31,9 @@ const seedDbUsers = (bundle)=>{
     return `
     INSERT INTO users
            ( id, username , "password", authority, created_on,last_login )
-           VALUES (DEFAULT, '${bundle.username}', '${hash}','${bundle.authority}', '${bundle.created_on}', '${bundle.last_login}'  )`
+           VALUES (DEFAULT, '${bundle.username}', '${hash}','${bundle.authority}', 
+           to_timestamp (${bundle.created_on}/1000), 
+           to_timestamp (${bundle.last_login}/1000))`
 }
 const seedDbProfileUsers = ``
 

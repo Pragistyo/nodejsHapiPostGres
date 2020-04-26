@@ -1,29 +1,25 @@
 const {Pool, Client} = require('pg');
-require('dotenv').config()
-//or native libpq bindings
-//var pg = require('pg').native
+const seedData = require('./seedData')
 
-const conString = process.env.INSERT_YOUR_POSTGRES_URL_HERE
 const dbConfig = require('./dbConfig')
 const queryPool = require('./dbTableQueryConfig')
 
 const pool = new Pool(dbConfig);
-    const client = await pool.connect()
 pool.on('error', function (err, client) {
     console.error('idle client error', err.message, err.stack);
 });
 
-const initSeedDB = async ()=>{
+const initSeedDB = async () => {
     const client = await pool.connect()
-
+    
     try{
-        let seedUser = await client.query(queryPool.seedUser)
-
+        let seedDbUsers = await client.query(queryPool.seedDbUsers(seedData.primeUser))
+        console.log('seedDbUser: ', seedDbUsers)
     }catch(err){
-        console.error('error seeding: ', err)
+        console.error('error seeding users: ', err)
     }
 
-    client.release()
-})
+    client.release();
+}
 
 initSeedDB();

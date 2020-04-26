@@ -2,9 +2,11 @@
   "name": "nodejshapipostgres",
   "version": "1.0.0",
   "description": "development back end with hapiJS and PostgresSql",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed_user": "node seedData.js",
+    "start": "node seedData.js"
   },
   "repository": {
     "type": "git",
