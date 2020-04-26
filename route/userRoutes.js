@@ -1,5 +1,5 @@
 
-const UserControllers = require('../controller/userController')
+const UserControllers = require('../Controller/userController')
 module.exports = [
     {
         path: '/',
@@ -15,7 +15,7 @@ module.exports = [
         handler: UserControllers.create
     },
     {
-        path: '/api/users/',
+        path: '/api/users',
         method: 'GET',
         handler: UserControllers.getAll
     },
@@ -25,12 +25,12 @@ module.exports = [
         handler: UserControllers.getById
     },
     {
-        path: '/api/companies/{id}',
+        path: '/api/users/{id}',
         method: 'DELETE',
         handler: UserControllers.delete
     },
     {
-        path: '/api/companies/{id}',
+        path: '/api/users/{id}',
         method: 'PUT',
         handler: UserControllers.update
     }

@@ -1,40 +1,49 @@
 const Hapi = require('@hapi/hapi');
-const userRoutes = require('./route/userRoutes');
+const userRoutes = require('./Route/userRoutes');
+require('dotenv').config();
 
-const pg = require('pg')
+const {Pool, Client} = require('pg')
 
 var conString = process.env.INSERT_YOUR_POSTGRES_URL_HERE //Can be found in the Details page
-var client = new pg.Client(conString);
-var passwordPg = process.env.SECRET_KEY_PG
-console.log(userRoutes)
+console.log('conString', typeof(conString))
 
-const server = Hapi.server({
-    port: 3000,
-    host: 'localhost'
-});
-
+const client = new Client(conString)
 
 const init = async () => {
 
-    server.route(userRoutes)
-    
-    // server.route({
-    //     method: 'GET',
-    //     path: '/',
-    //     handler: (request, h) => {
-    
-    //         return 'Hello World!';
-    //     }
-    // });
-    
+    const server = Hapi.server({
+      port: 3000,
+      host: 'localhost'
+    });
 
+    console.log(userRoutes)
+
+    server.route(userRoutes)
+
+    try{ //connect pg
+      await client.connect()
+
+      try{// try query after connect db
+          let result = await client.query('SELECT NOW() AS "theTime"')
+          console.log('success connect pg basic: ',result.rows[0].theTime);
+          // >> output: 2018-08-23T14:02:57.117Z
+          await client.end()
+      }catch(errorTestQuery){
+        console.error('error pg query basic: ', errorTestQuery)
+      }
+
+    }catch (err){
+        console.log('error from pg connect: ', err)
+    }
+
+    // server start
     await server.start();
     console.log('Server running on %s', server.info.uri);
 };
 
 process.on('unhandledRejection', (err) => {
 
-    console.error('>>>>>>>>>>>>>>>>>',err);
+    console.error('Error Hapi.js',err);
     process.exit(1);
 });
 
