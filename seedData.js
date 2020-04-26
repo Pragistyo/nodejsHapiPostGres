@@ -7,6 +7,6 @@ const primeUser = {
     last_login: null
 }
 
-module.exports={
-    primeUser
+module.exports = {
+     primeUser
 }
